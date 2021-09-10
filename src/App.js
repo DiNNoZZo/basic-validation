@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import AddPeopleForm from './components/AddPeopleForm';
+
+import './App.scss';
+import UsersList from './components/UsersList';
+
+const DUMMY_USERS = [
+  {
+    id: 1,
+    name: 'John',
+    age: 28,
+  },
+  {
+    id: 2,
+    name: 'Eva',
+    age: 21,
+  },
+];
 
 function App() {
+  const [users, setUsers] = useState(DUMMY_USERS);
+
+  const getNewUser = (user) => {
+    setUsers((prevUsers) => [user, ...prevUsers]);
+  };
+
+  const deleteUser = (deleteUser) => {
+    const newUsers = users.filter((user) => user.id !== +deleteUser.id);
+    setUsers([...newUsers]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AddPeopleForm users={users} getNewUser={getNewUser} />
+      <UsersList users={users} deleteUser={deleteUser} />
     </div>
   );
 }

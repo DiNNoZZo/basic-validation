@@ -1,0 +1,24 @@
+.users__list {
+  padding: 0.5rem 0;
+  margin-bottom: 5rem;
+
+  .user {
+    display: inline-block;
+    width: 50%;
+
+    &__item {
+      margin: 1rem 0;
+      font-size: 1.9rem;
+      padding: 1.2rem 1rem;
+      transition: all 0.1s ease;
+
+      &:hover {
+        background-color: hsl(0, 0%, 87%);
+      }
+
+      &:active {
+        background-color: rgb(141, 0, 0);
+      }
+    }
+  }
+}
