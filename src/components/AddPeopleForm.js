@@ -90,8 +90,8 @@ const AddPeopleForm = (props) => {
     };
 
     //validation
-    const isValidStr = validationStr(newUser.name);
     const isValidNum = validationNum(newUser.age);
+    const isValidStr = validationStr(newUser.name);
 
     if (!isValidStr || !isValidNum) return;
 
