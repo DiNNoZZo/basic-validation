@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 
-import PopMessage from './PopMessage';
+import PopMessage from './UI/PopMessage';
+import Card from './UI/Card';
+import Button from './UI/Button';
 
 import './AddPeopleForm.scss';
 
@@ -8,8 +10,7 @@ const AddPeopleForm = (props) => {
   //states
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
-  const [errorDes, setErrorDes] = useState('');
+  const [error, setError] = useState();
 
   //refs
   const inputName = useRef(null);
@@ -17,10 +18,11 @@ const AddPeopleForm = (props) => {
   //validations
   const validationStr = (string) => {
     if (string.trim().length < 3) {
-      setErrorMsg('Must contain at least 3 characters.');
-      setErrorDes(
-        'The name you enter is too short, the menu must contain 3 or more characters.'
-      );
+      setError({
+        title: 'Must contain at least 3 characters.',
+        message:
+          'The name you enter is too short, the menu must contain 3 or more characters.',
+      });
 
       return false;
     }
@@ -30,24 +32,29 @@ const AddPeopleForm = (props) => {
 
   const validationNum = (number) => {
     if (isNaN(number) || number.trim() === '') {
-      setErrorMsg('Enter your age.');
-      setErrorDes('Empty field and letters do not express your age 😎.');
+      setError({
+        title: 'Enter your age.',
+        message: 'Empty field and letters do not express your age 😎.',
+      });
 
       return false;
     }
 
     if (+number === 0) {
-      setErrorMsg('You must have more than 0.');
-      setErrorDes(
-        'If you are already sitting here, you must be over 0 years old 😋.'
-      );
+      setError({
+        title: 'You must have more than 0.',
+        message:
+          'If you are already sitting here, you must be over 0 years old 😋.',
+      });
 
       return false;
     }
 
     if (+number < 0) {
-      setErrorMsg('Your age is a positive number.');
-      setErrorDes("If your age is a negative number, then I don't know 😁.");
+      setError({
+        title: 'Your age is a positive number.',
+        message: "If your age is a negative number, then I don't know 😁.",
+      });
 
       return false;
     }
@@ -65,11 +72,8 @@ const AddPeopleForm = (props) => {
   };
 
   //closed pop message
-  const closedPop = (boolean) => {
-    if (boolean) {
-      setErrorMsg('');
-      setErrorDes('');
-    }
+  const closedPop = () => {
+    setError(null);
   };
 
   //sending data to create new user
@@ -106,45 +110,53 @@ const AddPeopleForm = (props) => {
   };
 
   return (
-    <form className="form container" onSubmit={submitHandler}>
-      <ul>
-        <li className="form__item">
-          <label className="label label--name">Name</label>
-          <input
-            ref={inputName}
-            value={name}
-            onChange={getNameHandler}
-            className="input input--name"
-            id="name"
-            type="text"
-            name="name"
-          ></input>
-        </li>
-        <li className="form__item">
-          <label className="label label--age">Age</label>
-          <input
-            value={age}
-            onChange={getAgeHandler}
-            className="input input--age"
-            id="age"
-            type="number"
-            name="age"
-          ></input>
-        </li>
-        <li className="form__item">
-          <button className="button button--age" name="submit">
-            Add user
-          </button>
-        </li>
-      </ul>
-      {errorMsg.length > 0 && (
+    <div>
+      <Card>
+        <form className="form" onSubmit={submitHandler}>
+          <ul>
+            <li className="form__item">
+              <label className="label label--name">Name</label>
+              <input
+                ref={inputName}
+                value={name}
+                onChange={getNameHandler}
+                className="input input--name"
+                id="name"
+                type="text"
+                name="name"
+              ></input>
+            </li>
+            <li className="form__item">
+              <label className="label label--age">Age</label>
+              <input
+                value={age}
+                onChange={getAgeHandler}
+                className="input input--age"
+                id="age"
+                type="number"
+                name="age"
+              ></input>
+            </li>
+            <li className="form__item">
+              <Button
+                className="button button--age"
+                type="submit"
+                name="submit"
+              >
+                Add user
+              </Button>
+            </li>
+          </ul>
+        </form>
+      </Card>
+      {error && (
         <PopMessage
-          message={errorMsg}
-          description={errorDes}
+          title={error.title}
+          message={error.message}
           closedPop={closedPop}
         />
       )}
-    </form>
+    </div>
   );
 };
 

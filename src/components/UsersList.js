@@ -1,5 +1,6 @@
 import React from 'react';
-import Message from './Message';
+import Message from './UI/Message';
+import Card from './UI/Card';
 
 import './UsersList.scss';
 
@@ -16,22 +17,24 @@ const UsersList = (props) => {
   };
 
   return (
-    <ul className="users__list container">
-      {props.users.map((user) => {
-        return (
-          <li
-            key={user.id}
-            id={user.id}
-            className="user__item"
-            onClick={deleteUserHandler}
-          >
-            <p className="user user--name">
-              {user.name} <span>({user.age} years old)</span>
-            </p>
-          </li>
-        );
-      })}
-    </ul>
+    <Card className="users__list">
+      <ul>
+        {props.users.map((user) => {
+          return (
+            <li
+              key={user.id}
+              id={user.id}
+              className="user__item"
+              onClick={deleteUserHandler}
+            >
+              <p className="user user--name">
+                {user.name} <span>({user.age} years old)</span>
+              </p>
+            </li>
+          );
+        })}
+      </ul>
+    </Card>
   );
 };
 
