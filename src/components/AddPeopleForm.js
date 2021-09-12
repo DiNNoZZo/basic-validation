@@ -16,7 +16,7 @@ const AddPeopleForm = (props) => {
 
   //validations
   const validationStr = (string) => {
-    if (string.length < 3) {
+    if (string.trim().length < 3) {
       setErrorMsg('Must contain at least 3 characters.');
       setErrorDes(
         'The name you enter is too short, the menu must contain 3 or more characters.'
@@ -29,7 +29,7 @@ const AddPeopleForm = (props) => {
   };
 
   const validationNum = (number) => {
-    if (isNaN(number) || number === '') {
+    if (isNaN(number) || number.trim() === '') {
       setErrorMsg('Enter your age.');
       setErrorDes('Empty field and letters do not express your age 😎.');
 
@@ -127,7 +127,7 @@ const AddPeopleForm = (props) => {
             onChange={getAgeHandler}
             className="input input--age"
             id="age"
-            type="text"
+            type="number"
             name="age"
           ></input>
         </li>
